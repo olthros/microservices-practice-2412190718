@@ -30,6 +30,25 @@
 | **签到与核销** | 到店扫码/输入码签到、教练确认、课时扣减 |
 | **支付与订单** | 购买课包/会员卡、订单生成、支付状态同步、退款处理 |
 
+## 运行与测试说明
+
+### 环境要求
+- Java 25
+- Maven 3.9+
+
+### 启动与测试命令
+在 `monolith/` 目录下执行：
+- 运行测试：`./mvnw test`
+- 启动应用：`./mvnw spring-boot:run`
+
+### 接口与健康检查
+- 问候接口：`GET http://localhost:8080/api/hello`
+- 健康检查：`GET http://localhost:8080/actuator/health`
+
+### 当前尚未实现的业务能力
+本周仅完成 Spring Boot 基础设施搭建，尚未实现数据库持久化、会员卡务、课程预约、签到等具体业务逻辑，后续将逐步完善。
+
+
 ## 核心业务流程 (Mermaid 图)
 ```mermaid
 sequenceDiagram
