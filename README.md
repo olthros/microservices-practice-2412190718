@@ -63,3 +63,26 @@ sequenceDiagram
     S-->>C: 提醒教练上课
     C->>S: 确认签到/扣课
     S-->>M: 扣除课时，记录签到成功
+```
+
+## 数据库配置与启动说明（作业04新增）
+
+### 1. 本地 MySQL 安装与配置
+- 需在本机安装 MySQL 8.0+。
+- 创建数据库：`CREATE DATABASE gymdb;`
+- 创建用户并授权：`CREATE USER 'gymuser'@'localhost' IDENTIFIED BY 'GymPass123!'; GRANT ALL ON gymdb.* TO 'gymuser'@'localhost';`
+- 在 `src/main/resources/application.yml` 中已配置好对应的连接信息。
+
+### 2. 启动与测试命令
+- 启动应用：`./mvnw spring-boot:run`
+- 运行自动化测试（使用 H2 内存库）：`./mvnw test`
+
+### 3. Curl 接口测试示例
+**示例 1：创建会员**
+```bash
+curl -X POST "http://localhost:8080/api/member" -H "Content-Type: application/json" -d '{"name":"程子恒","phone":"123456","remainingSessions":3}'
+```
+**示例 2：预约课程（核心业务）**
+```bash
+curl -X POST "http://localhost:8080/api/book" -H "Content-Type: application/json" -d '{"memberId":1,"courseId":1}'
+```
