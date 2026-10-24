@@ -86,3 +86,13 @@ curl -X POST "http://localhost:8080/api/member" -H "Content-Type: application/js
 ```bash
 curl -X POST "http://localhost:8080/api/book" -H "Content-Type: application/json" -d '{"memberId":1,"courseId":1}'
 ```
+
+## Docker Compose 启动说明
+
+1. 复制环境变量模板：`cp .env.example .env`
+2. 一键构建并启动服务：`docker compose up -d --build`
+3. 查看服务状态：`docker compose ps`
+4. 停止服务（保留数据）：`docker compose down`
+
+**健康检查接口**：`GET http://localhost:8080/actuator/health`
+**创建会员接口**：`POST http://localhost:8080/api/member`

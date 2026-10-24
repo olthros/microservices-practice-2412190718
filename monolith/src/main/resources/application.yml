@@ -2,18 +2,12 @@ spring:
   application:
     name: gym-membership-system
   datasource:
-    url: jdbc:mysql://localhost:3306/gymdb?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&allowPublicKeyRetrieval=true
-    username: gymuser
-    password: 20060601czh
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:gymdb}?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&allowPublicKeyRetrieval=true
+    username: ${DB_USER:gymuser}
+    password: ${DB_PASSWORD:GymPass123!}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
     database-platform: org.hibernate.dialect.MySQLDialect
-
-server:
-  port: 8080
