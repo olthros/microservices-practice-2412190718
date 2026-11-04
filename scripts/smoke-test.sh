@@ -1,7 +1,9 @@
 #!/bin/bash
 
+#!/bin/bash
+
 echo "=== 1. Health Check ==="
-curl -s -o /dev/null -w "user-service: %{http_code}\n" http://localhost:8081/actuator/health
+curl -s -o /dev/null -w "user-service: %{http_code}\n" http://localhost:8081/api/members/health
 curl -s -o /dev/null -w "course-service: %{http_code}\n" http://localhost:8082/actuator/health
 curl -s -o /dev/null -w "booking-service: %{http_code}\n" http://localhost:8083/actuator/health
 
