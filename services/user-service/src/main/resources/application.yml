@@ -4,6 +4,13 @@ server:
 spring:
   application:
     name: user-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
+        username: ${NACOS_USERNAME:nacos}
+        password: ${NACOS_PASSWORD:}
+        group: PERSONAL_GROUP
   datasource:
     url: jdbc:mysql://${DB_HOST:localhost}:3306/user_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     username: root

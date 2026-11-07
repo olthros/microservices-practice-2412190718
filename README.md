@@ -96,3 +96,12 @@ curl -X POST "http://localhost:8080/api/book" -H "Content-Type: application/json
 
 **健康检查接口**：`GET http://localhost:8080/actuator/health`
 **创建会员接口**：`POST http://localhost:8080/api/member`
+
+
+## 服务注册与发现（week-07）
+
+- 使用 Nacos 3.2.4 单机容器：控制台地址 `http://localhost:18080`（首次进入需初始化 nacos 管理员密码），服务端端口 8848，SDK gRPC 端口 9848，业务服务分组 `PERSONAL_GROUP`。
+- 启动顺序：先 `docker compose up -d nacos`，在控制台初始化管理员密码后，再 `docker compose up -d --build` 启动全部业务服务。
+- 业务调用：booking-service 每次预约都通过 `DiscoveryClient.getInstances()` 实时发现 user-service / course-service 实例，不再使用固定地址；实例列表为空时返回 503，会员/课程不存在仍返回 404。
+- 冒烟脚本：从仓库根目录执行 `bash scripts/smoke-test.sh`，任一检查失败以退出码 1 结束。
+- 各服务测试：进入对应 `services/<服务名>/` 目录执行 `./mvnw test`，测试不连接真实 Nacos 或 MySQL。

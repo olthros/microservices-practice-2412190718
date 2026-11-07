@@ -1,10 +1,17 @@
 server:
-port: 8083
+  port: 8083
 spring:
-application:
-name: booking-service
+  application:
+    name: booking-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
+        username: ${NACOS_USERNAME:nacos}
+        password: ${NACOS_PASSWORD:}
+        group: PERSONAL_GROUP
 management:
-endpoints:
-web:
-exposure:
-include: health
+  endpoints:
+    web:
+      exposure:
+        include: health

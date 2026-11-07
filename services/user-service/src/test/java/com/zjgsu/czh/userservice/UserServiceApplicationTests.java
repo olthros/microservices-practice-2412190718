@@ -1,4 +1,4 @@
-package com.zjgsu.czh.user_service;
+package com.zjgsu.czh.userservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

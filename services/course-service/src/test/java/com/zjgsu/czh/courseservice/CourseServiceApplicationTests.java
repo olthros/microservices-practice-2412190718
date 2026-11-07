@@ -1,4 +1,4 @@
-package com.zjgsu.czh.course_service;
+package com.zjgsu.czh.courseservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

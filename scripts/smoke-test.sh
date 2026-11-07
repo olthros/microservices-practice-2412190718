@@ -1,26 +1,30 @@
 #!/bin/bash
 
-#!/bin/bash
+set -u
 
-echo "=== 1. Health Check ==="
-curl -s -o /dev/null -w "user-service: %{http_code}\n" http://localhost:8081/api/members/health
-curl -s -o /dev/null -w "course-service: %{http_code}\n" http://localhost:8082/actuator/health
-curl -s -o /dev/null -w "booking-service: %{http_code}\n" http://localhost:8083/actuator/health
+fail=0
 
-echo -e "\n=== 2. Add Test Data ==="
-curl -X POST "http://localhost:8081/api/members" -H "Content-Type: application/json" -d '{"name":"程子恒","remainingSessions":5}'
-curl -X POST "http://localhost:8082/api/courses" -H "Content-Type: application/json" -d '{"name":"动感单车","capacity":10,"bookedCount":0}'
+check() {
+    local name="$1"
+    local url="$2"
+    code=$(curl -s -L -o /dev/null -w "%{http_code}" --max-time 5 "$url")
+    echo "$name -> HTTP $code  ($url)"
+    case "$code" in
+        2*|3*) ;;
+        *) echo "  !! $name 检查失败"; fail=1 ;;
+    esac
+}
 
-echo -e "\n=== 3. Normal Booking ==="
-curl -X POST "http://localhost:8083/api/book?memberId=1&courseId=1"
+echo "=== 1. Nacos 控制台（本机映射端口 18080）==="
+check "nacos-console" "http://localhost:18080/"
 
-echo -e "\n=== 4. Failure Scenario ==="
-echo "Stopping user-service..."
-docker stop user-service
-sleep 2
-echo "Attempting booking (should fail)..."
-curl -X POST "http://localhost:8083/api/book?memberId=1&courseId=1"
-echo ""
+echo "=== 2. 各业务服务健康接口 ==="
+check "user-service"    "http://localhost:8081/actuator/health"
+check "course-service"  "http://localhost:8082/actuator/health"
+check "booking-service" "http://localhost:8083/actuator/health"
 
-echo "Starting user-service..."
-docker start user-service
+if [ "$fail" -ne 0 ]; then
+    echo "=== 冒烟检查未通过 ==="
+    exit 1
+fi
+echo "=== 全部检查通过 ==="
