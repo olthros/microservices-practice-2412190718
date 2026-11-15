@@ -1,0 +1,45 @@
+### 1. 新增一个会员（剩余 3 课时）
+POST http://localhost:8081/api/members
+Content-Type: application/json
+
+{
+  "name": "张三",
+  "phone": "13800000001",
+  "remainingSessions": 3
+}
+
+### 2. 新增一节容量为 2 的课
+POST http://localhost:8082/api/courses
+Content-Type: application/json
+
+{
+  "name": "瑜伽入门",
+  "coach": "李教练",
+  "capacity": 2,
+  "bookedCount": 0
+}
+
+### 3. 检查会员（应返回 OK）
+GET http://localhost:8081/api/members/1/check
+
+### 4. 检查课程（应返回 OK）
+GET http://localhost:8082/api/courses/1/check
+
+### 5. 预约课程（核心，参数写在 URL 上）
+POST http://localhost:8083/api/book?memberId=1&courseId=1
+
+### 6. 再约一次（观察课时和名额继续减少）
+POST http://localhost:8083/api/book?memberId=1&courseId=1
+
+### 7. 新增一个没有课时的会员
+POST http://localhost:8081/api/members
+Content-Type: application/json
+
+{
+  "name": "王五",
+  "phone": "13800000002",
+  "remainingSessions": 0
+}
+
+### 8. 用没课时的会员预约（应失败）
+POST http://localhost:8083/api/book?memberId=2&courseId=1

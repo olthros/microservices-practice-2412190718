@@ -1,5 +1,6 @@
 server:
   port: 8083
+
 spring:
   application:
     name: booking-service
@@ -10,6 +11,17 @@ spring:
         username: ${NACOS_USERNAME:nacos}
         password: ${NACOS_PASSWORD:}
         group: PERSONAL_GROUP
+    openfeign:
+      client:
+        config:
+          default:
+            connect-timeout: 2000
+            read-timeout: 2000
+            logger-level: basic
+    loadbalancer:
+      retry:
+        enabled: false
+
 management:
   endpoints:
     web:
