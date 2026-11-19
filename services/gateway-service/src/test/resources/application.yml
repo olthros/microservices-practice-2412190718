@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+    service-registry:
+      auto-registration:
+        enabled: false
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: user-auth
+              uri: lb://user-service
+              predicates:
+                - Path=/api/auth/**
+            - id: user-members
+              uri: lb://user-service
+              predicates:
+                - Path=/api/members/**
+            - id: user-admin
+              uri: lb://user-service
+              predicates:
+                - Path=/api/admin/**
+
+app:
+  jwt:
+    secret: test-only-jwt-secret-0123456789abcdef0123456789abcdef
+    issuer: user-service

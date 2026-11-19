@@ -102,8 +102,6 @@ post_booking_until_success() {
             return 0
         fi
 
-        # 只有明确提示“预约未执行”的读取失败才等待服务注册后重试。
-        # 写超时或其他写调用结果未知时直接失败，避免重复预约。
         if [[ "$HTTP_CODE" != "503" ||
               "$HTTP_BODY" != *"预约未执行"* ]]; then
             break

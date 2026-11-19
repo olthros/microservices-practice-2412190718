@@ -1,5 +1,8 @@
 server:
   port: 8081
+  error:
+    include-message: always
+    include-stacktrace: never
 
 spring:
   application:
@@ -26,3 +29,9 @@ management:
     web:
       exposure:
         include: health,info
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:dev-only-jwt-secret-change-me-0123456789abcdef}
+    issuer: user-service
+    ttl-minutes: ${JWT_TTL_MINUTES:120}

@@ -14,3 +14,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+app:
+  jwt:
+    secret: test-only-jwt-secret-0123456789abcdef0123456789abcdef
+    issuer: user-service
+    ttl-minutes: 120
